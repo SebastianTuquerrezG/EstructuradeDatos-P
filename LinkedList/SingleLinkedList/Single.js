@@ -57,6 +57,49 @@ class MySinglyListedList {
         this.length++
         return this;
     }
+    insert(index, value){
+        if(index >= this.length){
+            return this.append(value);
+        }
+        if (index === 0) {
+        return this.prepend(value);
+}
+        const newNode = new Node(value);
+        const firstPointer = this.getTheIndex(index-1);
+        const holdingPointer = firstPointer.next;
+        firstPointer.next = newNode;
+        newNode.next = holdingPointer;
+        this.length++;
+        return this;
+    }
+    getTheIndex(index){
+        let counter = 0;
+        let currentNode = this.head;
+
+        while(counter !== index){
+            currentNode = currentNode.next;
+            counter++;
+        }
+        return currentNode;
+    }
+    remove(index) {
+        if (index === 0) {
+            this.head = this.head.next;
+            this.length--;
+            return;
+        }
+        if (index > 0 && index < this.length) {
+            const prevPointer = this.get(index - 1);
+            if (prevPointer) {
+                const pointer = prevPointer.next;
+                if (pointer) prevPointer.next = pointer.next;
+                    if (pointer === this.tail) this.tail = prevPointer;
+                        this.length--;
+                        return;
+            }
+        }
+        console.log("index out of bounds: " + index);
+    }
 }
 
 let myLinkedList = new MySinglyListedList(1);
